@@ -10,6 +10,7 @@ use potibm\Bluesky\Exception\HttpStatusCodeException;
 use potibm\Bluesky\Exception\InvalidPayloadException;
 use potibm\Bluesky\Feed\Post;
 use potibm\Bluesky\Response\CreateSessionResponse;
+use potibm\Bluesky\Response\ProfileResponse;
 use potibm\Bluesky\Response\RecordResponse;
 use potibm\Bluesky\Response\UploadBlobResponse;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -29,8 +30,7 @@ final class BlueskyApi implements BlueskyApiInterface
         private string $password,
         private HttpComponentsManager $options = new HttpComponentsManager(),
         private string $baseUrl = self::BASE_URL
-    ) {
-    }
+    ) {}
 
     #[\Override]
     public function getDidForHandle(string $handle): string
@@ -55,9 +55,9 @@ final class BlueskyApi implements BlueskyApiInterface
     }
 
     #[\Override]
-    public function getProfile(string $actor):ProfileResponse
+    public function getProfile(string $actor): ProfileResponse
     {
-        return new ProfileResponse( $this->performXrpcCall(
+        return new ProfileResponse($this->performXrpcCall(
             'GET',
             // https://atproto.com/guides/social-graph
             'app.bsky.actor.getProfile',
