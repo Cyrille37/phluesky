@@ -55,6 +55,22 @@ final class BlueskyApi implements BlueskyApiInterface
     }
 
     #[\Override]
+    public function getProfile(string $actor):ProfileResponse
+    {
+        return new ProfileResponse( $this->performXrpcCall(
+            'GET',
+            // https://atproto.com/guides/social-graph
+            'app.bsky.actor.getProfile',
+            [
+                'actor' => $actor,
+            ],
+            [],
+            [],
+            true
+        ));
+    }
+
+    #[\Override]
     public function createRecord(Post $post): RecordResponse
     {
         return new RecordResponse($this->performXrpcCall(
